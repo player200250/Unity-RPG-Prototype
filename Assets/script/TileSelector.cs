@@ -10,6 +10,9 @@ public class TileSelecter : MonoBehaviour
     private GameObject lastSelectedTile;
     public GameObject prefab;
 
+    //繼承UnitMover的功能
+    public UnitMover selectedUnit;
+
     // Update is called once per frame
     void Update()
     {
@@ -22,7 +25,10 @@ public class TileSelecter : MonoBehaviour
             RaycastHit hit;
 
             // 3. 執行射線偵測
-            if (Physics.Raycast(ray, out hit))
+            // 偵測地板"Tile 層"
+            int groundLayer = LayerMask.GetMask("Tile"); // 只偵測 Tile 層
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
             {
                 GameObject HitObject = hit.collider.gameObject;
                 Renderer tileRenderer = HitObject.GetComponent<Renderer>();
@@ -59,14 +65,18 @@ public class TileSelecter : MonoBehaviour
                             //Debug.Log("選取新格子：" + HitObject.name);
                             Debug.Log($"<color=lime >選取座標: [{Info.Grid_X},{Info.Grid_Y}]</color>");
                             //點擊時生成物件
-                            if (prefab != null && !Info.IsOccupied)
+                            if (prefab != null)
                             {
+                                //檢查是否有單位在上面
                                 //計算位置: 生成在地板上方
-                                Vector3 spawnObject = HitObject.transform.position + Vector3.up * 1.5f;
+                                //Vector3 spawnObject = HitObject.transform.position + Vector3.up * 1.5f;
 
-                                //生成物件:
-                                Instantiate(prefab, spawnObject, Quaternion.identity);
-                                Info.IsOccupied = true; //避免重複生成
+                                ////生成物件:
+                                //Instantiate(prefab, spawnObject, Quaternion.identity);
+                                //Info.IsOccupied = true; //避免重複生成
+
+                                //使用 UnitMover 的 MoveTo 功能來移動單位
+                                selectedUnit.MoveTo(Info);
                             }
                         }
                         else
