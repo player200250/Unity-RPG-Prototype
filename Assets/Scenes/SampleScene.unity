@@ -227,8 +227,8 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194230}
   - component: {fileID: 963194231}
+  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -310,21 +310,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
---- !u!114 &963194230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1628e710f041f76438da62412d31fd01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grid_X: 0
-  Grid_Y: 0
-  IsOccupied: 0
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +324,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1246864015}
   selectedUnit: {fileID: 1246864020}
+--- !u!114 &963194232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1628e710f041f76438da62412d31fd01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grid_X: 0
+  Grid_Y: 0
+  IsOccupied: 0
 --- !u!1 &1246864015 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3396478104364995894, guid: ee9535bd154f75042ad0e7e3ce1ca156, type: 3}
@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentTile: {fileID: 0}
+  MoveRange: 3
 --- !u!1 &1525602423
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +463,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapTile
       objectReference: {fileID: 0}
+    - target: {fileID: 6063873889634041461, guid: 3e363ab9c9c393e429573575a38280e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -478,6 +483,10 @@ PrefabInstance:
     - target: {fileID: 3396478104364995894, guid: ee9535bd154f75042ad0e7e3ce1ca156, type: 3}
       propertyPath: m_Name
       value: Capsule
+      objectReference: {fileID: 0}
+    - target: {fileID: 3396478104364995894, guid: ee9535bd154f75042ad0e7e3ce1ca156, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8128907108418839614, guid: ee9535bd154f75042ad0e7e3ce1ca156, type: 3}
       propertyPath: m_LocalPosition.x

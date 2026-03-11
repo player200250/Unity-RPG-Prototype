@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MapGenerater : MonoBehaviour
 {
@@ -15,7 +16,9 @@ public class MapGenerater : MonoBehaviour
 
     //定義可以儲存遊戲地板的陣列
     private GameObject[,] MapGrid;
-    
+
+    public Dictionary<Vector2Int,TileInfo> TileMap = new Dictionary<Vector2Int, TileInfo>();
+
     private void Awake()
     {
         Instance = this;
@@ -56,7 +59,7 @@ public class MapGenerater : MonoBehaviour
                 TileInfo info = tile.AddComponent<TileInfo>(); //優化成動態掛載
                 info.Grid_X = i;
                 info.Grid_Y = j;
-
+                TileMap[new Vector2Int(i, j)] = info; //將Tilemap加入字典，方便後續使用
             }
         }
         Debug.Log("地圖生成完畢！總共生成了 " + (Width * Height) + " 個格子。");

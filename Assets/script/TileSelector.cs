@@ -18,6 +18,9 @@ public class TileSelecter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 如果滑鼠在UI上，就不執行以下的點擊偵測
+        if (!TurnManager.Instance.IsPlayerTurn) 
+        {  return; };
         if (Input.GetMouseButtonDown(0))
         {
             // 1. 建立射線
