@@ -14,15 +14,24 @@ public class TileSelecter : MonoBehaviour
     public UnitMover selectedUnit;
     //用來檢查是否有單位被選取
     private bool unitSelected = false;
+    //設定冷卻時間，避免玩家快速點擊造成問題
+    private float clickCooldown = 0f;
 
     // Update is called once per frame
     void Update()
     {
         // 如果滑鼠在UI上，就不執行以下的點擊偵測
-        if (!TurnManager.Instance.IsPlayerTurn) 
-        {  return; };
+        if (!TurnManager.Instance.IsPlayerTurn) return;
+        if (clickCooldown > 0)
+        {
+            clickCooldown -= Time.deltaTime;
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
+            // 重置冷卻時間
+            clickCooldown = 0.5f;
+
             // 1. 建立射線
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -36,9 +45,16 @@ public class TileSelecter : MonoBehaviour
                 UnitMover unit = hit.collider.GetComponent<UnitMover>();
                 if (unit != null)
                 {
+                    if (!hit.collider.CompareTag("Player"))
+                    {
+                        unitSelected = false;   
+                        selectedUnit = null;    
+                        unit.ShowMoveRange(Color.red); // 顯示敵人威脅範圍
+                        return; // 如果點到的不是玩家角色，就不處理選取
+                    }
                     if (unitSelected && selectedUnit == unit)
                     {
-                        
+
                         // 再次點擊同一個角色 → 取消選取
                         unitSelected = false;
                         Debug.Log("取消選取角色");
@@ -48,7 +64,7 @@ public class TileSelecter : MonoBehaviour
                         // 選取角色
                         selectedUnit = unit;
                         unitSelected = true;
-                        unit.ShowMoveRange(); // 顯示移動範圍
+                        unit.ShowMoveRange(Color.blue); // 顯示移動範圍
                         Debug.Log("選取角色：" + unit.name);
                     }
                     return; // 點到角色就不繼續偵測地板
@@ -96,7 +112,7 @@ public class TileSelecter : MonoBehaviour
                             //Debug.Log("選取新格子：" + HitObject.name);
                             Debug.Log($"<color=lime >選取座標: [{Info.Grid_X},{Info.Grid_Y}]</color>");
                             //點擊時生成物件
-                            if (unitSelected && selectedUnit != null )
+                            if (unitSelected && selectedUnit != null)
                             {
                                 //檢查是否有單位在上面
                                 //計算位置: 生成在地板上方
@@ -118,7 +134,7 @@ public class TileSelecter : MonoBehaviour
                 }
             }
 
-           
+
         }
     }
 }

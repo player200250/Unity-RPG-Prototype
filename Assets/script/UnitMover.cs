@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class UnitMover : MonoBehaviour
@@ -59,10 +60,12 @@ public class UnitMover : MonoBehaviour
     }
 
     //呈現移動範圍的功能
-    public void ShowMoveRange()
+    public void ShowMoveRange(UnityEngine.Color color)
     {
         // 這裡可以用不同顏色的方塊來表示移動範圍
-        // 例如，生成一些半透明的紅色方塊在可移動的格子上
+        // 這裡的邏輯是：從目前的格子開始，往四個方向擴散，直到達到移動範圍為止
+        // 生成半透明的紅色方塊在可移動的格子上
+
         for (int x = -MoveRange; x <= MoveRange; x++)
         {
             for (int y = -MoveRange; y <= MoveRange; y++)
@@ -82,7 +85,7 @@ public class UnitMover : MonoBehaviour
                         GameObject rangeIndicator = GameObject.CreatePrimitive(PrimitiveType.Cube);
                         rangeIndicator.transform.position = spawnPosition;
                         rangeIndicator.transform.localScale = new Vector3(0.9f, 0.1f, 0.9f) * MapGenerater.Instance.Spacing;
-                        rangeIndicator.GetComponent<Renderer>().material.color = new Color(1, 0, 0, 0.5f);
+                        rangeIndicator.GetComponent<Renderer>().material.color = new UnityEngine.Color(color.r, color.g, color.b, 0.5f);
                         Destroy(rangeIndicator, 1f); // 一秒後自動銷毀
                     }
                 }
