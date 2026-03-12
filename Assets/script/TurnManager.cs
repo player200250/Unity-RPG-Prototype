@@ -44,6 +44,25 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    public void CheckGameOver()
+    {
+        // 檢查玩家是否死亡
+        if (GameObject.FindWithTag("Player") == null)
+        {
+            TurnText.text = "遊戲結束!你輸了!";
+            Debug.Log("遊戲結束!你輸了!");
+            return;
+        }
+        // 檢查敵人是否死亡
+        EnemyAI[] enemies = FindObjectsOfType<EnemyAI>();
+        if (enemies.Length <= 1) // <=1 因為當前敵人還沒被Destroy
+        {
+            TurnText.text = "恭喜!你贏了!";
+            Debug.Log("恭喜!你贏了!");
+            return;
+        }
+    }
+
 
 
 

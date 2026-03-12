@@ -47,10 +47,29 @@ public class TileSelecter : MonoBehaviour
                 {
                     if (!hit.collider.CompareTag("Player"))
                     {
-                        unitSelected = false;   
-                        selectedUnit = null;    
-                        unit.ShowMoveRange(Color.red); // 顯示敵人威脅範圍
-                        return; // 如果點到的不是玩家角色，就不處理選取
+                        UnitStats attackerStats = unitSelected ? selectedUnit.GetComponent<UnitStats>() : null;
+                        UnitMover attackerMover = unitSelected ? selectedUnit : null;
+                        UnitStats targetStats = unit.GetComponent<UnitStats>();
+                        UnitMover targetMover = unit.GetComponent<UnitMover>();
+
+                        unitSelected = false;
+                        selectedUnit = null;
+
+                        if (attackerStats != null && attackerMover != null)
+                        {
+                            int distance = Mathf.Abs(targetMover.CurrentTile.Grid_X - attackerMover.CurrentTile.Grid_X)
+                                         + Mathf.Abs(targetMover.CurrentTile.Grid_Y - attackerMover.CurrentTile.Grid_Y);
+
+                            if (distance <= attackerStats.AttackRange)
+                                targetStats.TakeDamage(attackerStats.AttackPower);
+                            else
+                                unit.ShowMoveRange(Color.red);
+                        }
+                        else
+                        {
+                            unit.ShowMoveRange(Color.red);
+                        }
+                        return;
                     }
                     if (unitSelected && selectedUnit == unit)
                     {
