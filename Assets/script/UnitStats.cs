@@ -20,6 +20,7 @@ public class UnitStats : MonoBehaviour
     public void TakeDamage(int damage)
     {
         CurrentHP -= damage;
+        StartCoroutine(FlashRed()); // 播放攻擊特效
         if (HPBarFill != null)
         {
             HPBarFill.fillAmount = (float)CurrentHP / MaxHP; // 更新HP條的填充量
@@ -30,6 +31,7 @@ public class UnitStats : MonoBehaviour
             if (CompareTag("Player"))
             {
                 TurnManager.Instance.TurnText.text = "遊戲結束!你輸了!";
+                TurnManager.Instance.IsPlayerTurn = false; // 阻止玩家繼續操作
                 Debug.Log("遊戲結束!你輸了!");
             }
             else
@@ -38,6 +40,16 @@ public class UnitStats : MonoBehaviour
             }
             Destroy(gameObject);
         }
+    }
+
+    // 攻擊特效(紅光閃爍)
+    private IEnumerator FlashRed()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        Color originalColor = renderer.material.color; // 記住原本顏色
+        renderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        renderer.material.color = originalColor; // 還原原本顏色
     }
 
 }

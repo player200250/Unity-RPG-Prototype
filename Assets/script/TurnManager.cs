@@ -72,7 +72,12 @@ public class TurnManager : MonoBehaviour
             yield return StartCoroutine(enemy.TakeTurn());
         }
         CheckGameOver();
-        EndTurn(); // 敵人回合結束，切換回玩家回合
+
+        // 玩家還活著才切回玩家回合
+        if (GameObject.FindWithTag("Player") != null)
+        {
+            EndTurn();
+        }
     }
     public void RestartGame()
     {
