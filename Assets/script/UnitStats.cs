@@ -9,6 +9,7 @@ public class UnitStats : MonoBehaviour
     public int CurrentHP;
     public int AttackPower = 1;
     public int AttackRange = 3;
+    public UnityEngine.UI.Image HPBarFill; // 用於顯示HP的UI元素
 
     void Start()
     {
@@ -19,6 +20,10 @@ public class UnitStats : MonoBehaviour
     public void TakeDamage(int damage)
     {
         CurrentHP -= damage;
+        if (HPBarFill != null)
+        {
+            HPBarFill.fillAmount = (float)CurrentHP / MaxHP; // 更新HP條的填充量
+        }
         Debug.Log($"{gameObject.name} 受到 {damage} 點傷害，剩餘 HP: {CurrentHP}");
         if (CurrentHP <= 0)
         {
