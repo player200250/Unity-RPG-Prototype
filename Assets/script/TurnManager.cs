@@ -35,15 +35,7 @@ public class TurnManager : MonoBehaviour
 
         if (!IsPlayerTurn)
         {
-
-
-            EnemyAI enemy = FindObjectOfType<EnemyAI>();
-            if (enemy != null)
-            {
-                // 開始敵人回合
-                StartCoroutine(enemy.TakeTurn());
-            }
-           
+            StartCoroutine(AllEnemiesTakeTurn());
         }
         else
         {
@@ -71,6 +63,17 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+
+    public IEnumerator AllEnemiesTakeTurn()
+    {
+        EnemyAI[] enemies = FindObjectsOfType<EnemyAI>();
+        foreach (EnemyAI enemy in enemies)
+        {
+            yield return StartCoroutine(enemy.TakeTurn());
+        }
+        CheckGameOver();
+        EndTurn(); // 敵人回合結束，切換回玩家回合
+    }
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

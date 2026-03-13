@@ -52,7 +52,7 @@ public class EnemyAI : MonoBehaviour
         if (player == null)
         {
 
-            TurnManager.Instance.EndTurn();
+            //TurnManager.Instance.EndTurn();
             yield break; // 缺少這行！沒有return會繼續執行下面的程式碼
         }
 
@@ -94,6 +94,6 @@ public class EnemyAI : MonoBehaviour
         }
 
         //// 行動完畢，切換回玩家回合
-        TurnManager.Instance.EndTurn();
+        //TurnManager.Instance.EndTurn();
     }
 }
