@@ -46,7 +46,20 @@ public class EnemyAI : MonoBehaviour
         #endregion
 
         // 用Tag找到玩家
-        UnitMover player = GameObject.FindWithTag("Player").GetComponent<UnitMover>();
+        UnitMover player = GameObject.FindWithTag("Player")?.GetComponent<UnitMover>();
+
+        // 加這個null檢查
+        if (player == null)
+        {
+
+            TurnManager.Instance.EndTurn();
+            yield break; // 缺少這行！沒有return會繼續執行下面的程式碼
+        }
+
+
+        UnitStats enemyStats = GetComponent<UnitStats>();
+        UnitStats playerStats = player.GetComponent<UnitStats>();
+
 
         // 計算距離並選擇最近的玩家
         // 邏輯：直接選擇第一個玩家，實際遊戲中可能需要更複雜的邏輯來選擇最近的玩家
@@ -54,7 +67,7 @@ public class EnemyAI : MonoBehaviour
         int dy = player.CurrentTile.Grid_Y - unitMover.CurrentTile.Grid_Y; // 實際遊戲中需要根據玩家的位置來決定移動y方向
 
         int moveX = dx == 0 ? 0 : (dx > 0 ? 1 : -1);
-        int moveY = dx == 0 ? 0 : (dy > 0 ? 1 : -1);
+        int moveY = dy == 0 ? 0 : (dy > 0 ? 1 : -1);
 
         int targetX = unitMover.CurrentTile.Grid_X + moveX;
         int targetY = unitMover.CurrentTile.Grid_Y + moveY;
@@ -65,6 +78,19 @@ public class EnemyAI : MonoBehaviour
             TileInfo targetTile = MapGenerater.Instance.TileMap[key];
             unitMover.MoveTo(targetTile);
             Debug.Log($"敵人移動到:({targetX}, {targetY})");
+        }
+        // 計算距離並攻擊玩家(因為單找(dx)和(dy)不太準)
+        int distance = Mathf.Abs(dx) + Mathf.Abs(dy);
+        if (distance <= enemyStats.AttackRange)
+        {
+            playerStats.TakeDamage(enemyStats.AttackPower);
+            Debug.Log($"敵人攻擊玩家，造成 {enemyStats.AttackPower} 點傷害");
+
+            // 檢查玩家是否死亡
+            if (playerStats.CurrentHP <= 0)
+            {
+                yield break;
+            }
         }
 
         //// 行動完畢，切換回玩家回合

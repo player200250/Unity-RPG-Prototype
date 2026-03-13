@@ -460,6 +460,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentTile: {fileID: 963194232}
   MoveRange: 3
+--- !u!114 &1246864021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246864015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757c19c7dc686d34a86fa774e9278ae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 1
+  CurrentHP: 0
+  AttackPower: 1
+  AttackRange: 3
 --- !u!1 &1314312919
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,10 +533,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7D50\u675F\u56DE\u5408"
+  m_text: "\u7D50\u675F\u56DE\u5408!!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c13cd1e68263bd4f984eff87fa52a73, type: 2}
-  m_sharedMaterial: {fileID: 7619616844416156320, guid: 6c13cd1e68263bd4f984eff87fa52a73, type: 2}
+  m_sharedMaterial: {fileID: 6571437515865418712, guid: 6c13cd1e68263bd4f984eff87fa52a73, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -676,9 +692,10 @@ GameObject:
   - component: {fileID: 1451670904}
   - component: {fileID: 1451670908}
   - component: {fileID: 1451670909}
+  - component: {fileID: 1451670910}
   m_Layer: 7
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -783,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcc48198b26394469dcad7ef1eab57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentTile: {fileID: 963194232}
+  CurrentTile: {fileID: 0}
   MoveRange: 3
 --- !u!114 &1451670909
 MonoBehaviour:
@@ -797,6 +814,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4d59b90feedc74cb053a8a3d94b8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1451670910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451670903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757c19c7dc686d34a86fa774e9278ae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 1
+  CurrentHP: 0
+  AttackPower: 1
+  AttackRange: 3
 --- !u!1 &1525602423
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,6 +1159,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3396478104364995894, guid: ee9535bd154f75042ad0e7e3ce1ca156, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1246864020}
+    - targetCorrespondingSourceObject: {fileID: 3396478104364995894, guid: ee9535bd154f75042ad0e7e3ce1ca156, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1246864021}
   m_SourcePrefab: {fileID: 100100000, guid: ee9535bd154f75042ad0e7e3ce1ca156, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

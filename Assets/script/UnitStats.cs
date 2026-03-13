@@ -22,14 +22,16 @@ public class UnitStats : MonoBehaviour
         Debug.Log($"{gameObject.name} 受到 {damage} 點傷害，剩餘 HP: {CurrentHP}");
         if (CurrentHP <= 0)
         {
-            // 確認單位死亡
-            Debug.Log($"{gameObject.name} 已經死亡！");
-            // 這裡可以添加死亡動畫、掉落物品等邏輯
-
-            // 勝負判定：如果玩家死亡，顯示遊戲結束；如果敵人死亡，檢查是否還有其他敵人，如果沒有則顯示勝利
-            TurnManager.Instance.CheckGameOver();
-
-            Destroy(gameObject); // 暫時直接刪除物件
+            if (CompareTag("Player"))
+            {
+                TurnManager.Instance.TurnText.text = "遊戲結束!你輸了!";
+                Debug.Log("遊戲結束!你輸了!");
+            }
+            else
+            {
+                TurnManager.Instance.CheckGameOver();
+            }
+            Destroy(gameObject);
         }
     }
 

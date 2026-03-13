@@ -55,7 +55,7 @@ public class TurnManager : MonoBehaviour
         }
         // 檢查敵人是否死亡
         EnemyAI[] enemies = FindObjectsOfType<EnemyAI>();
-        if (enemies.Length <= 1) // <=1 因為當前敵人還沒被Destroy
+        if (enemies.Length <= 1)
         {
             TurnText.text = "恭喜!你贏了!";
             Debug.Log("恭喜!你贏了!");
