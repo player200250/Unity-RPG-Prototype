@@ -76,7 +76,7 @@ public class EnemyAI : MonoBehaviour
         if (MapGenerater.Instance.TileMap.ContainsKey(key))
         {
             TileInfo targetTile = MapGenerater.Instance.TileMap[key];
-            unitMover.MoveTo(targetTile);
+            yield return StartCoroutine(unitMover.MoveTo(targetTile));
             Debug.Log($"敵人移動到:({targetX}, {targetY})");
         }
         // 計算距離並攻擊玩家(因為單找(dx)和(dy)不太準)

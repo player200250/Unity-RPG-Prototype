@@ -142,7 +142,8 @@ public class TileSelecter : MonoBehaviour
                                 //Info.IsOccupied = true; //避免重複生成
 
                                 //使用 UnitMover 的 MoveTo 功能來移動單位
-                                selectedUnit.MoveTo(Info);
+                                //修正: 
+                                StartCoroutine(selectedUnit.MoveTo(Info));
                             }
                         }
                         else

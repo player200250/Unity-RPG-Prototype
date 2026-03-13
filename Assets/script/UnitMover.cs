@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class UnitMover : MonoBehaviour
@@ -29,15 +28,19 @@ public class UnitMover : MonoBehaviour
     }
 
 
-    // 移動到新的格子  
-    public void MoveTo(TileInfo newTile)
+    // 移動到新的格子
+    // 添加動畫功能：在移動過程中，讓單位平滑地移動到新的位置，而不是瞬間跳轉 把普通方法改成協程，使用 Lerp 來實現平滑移動
+    public IEnumerator MoveTo(TileInfo newTile)
     {
         // 先檢查新的格子是否被佔用
         if (newTile.IsOccupied)
         {
             Debug.Log("這個格子已經被佔用了！");
-            return;
+            yield break;
+            // (!重要)運算式裡面加上 yield break; 來停止協程的執行(不是return) 
+            // (參考)這裡可以添加一些提示，比如閃爍格子或者播放音效，來告訴玩家這個格子不能移動
         }
+
         // 使用演算法:曼哈頓距離來檢查新的格子是否在移動範圍內
         int distance = Mathf.Abs(newTile.Grid_X - CurrentTile.Grid_X) 
                      + Mathf.Abs(newTile.Grid_Y - CurrentTile.Grid_Y);
@@ -45,7 +48,8 @@ public class UnitMover : MonoBehaviour
         if(distance > MoveRange)
         {
             Debug.Log("這個格子超出移動範圍了！");
-            return;
+            yield break;
+            // (參考)這裡同樣可以添加一些提示，比如閃爍格子或者播放音效，來告訴玩家這個格子不能移動
         }
         // 如果有目前的格子，先把它標記為未佔用
         if (CurrentTile != null)
@@ -55,8 +59,23 @@ public class UnitMover : MonoBehaviour
         // 更新目前的格子為新的格子
         CurrentTile = newTile;
         CurrentTile.IsOccupied = true;
+
+        // 添加動畫功能：在移動過程中，讓單位平滑地移動到新的位置，而不是瞬間跳轉
+        Vector3 startPosition = transform.position;
+        Vector3 endPosition = newTile.transform.position + Vector3.up * 1.5f;
+        float elapsedTime = 0f;
+        float moveDuration = 0.5f; // 移動持續時間，可以根據需要調整
+
+        while (elapsedTime < moveDuration)
+        {
+            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / moveDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null; // 等待下一幀
+        }
         // 更新單位的位置到新的格子的位置
-        transform.position = newTile.transform.position + Vector3.up * 1.5f;
+        transform.position = endPosition;
+
+
     }
 
     //呈現移動範圍的功能
