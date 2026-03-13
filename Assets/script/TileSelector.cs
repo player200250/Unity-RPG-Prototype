@@ -16,6 +16,8 @@ public class TileSelecter : MonoBehaviour
     private bool unitSelected = false;
     //設定冷卻時間，避免玩家快速點擊造成問題
     private float clickCooldown = 0f;
+    //設定一回合只能動一次
+    public bool hasMoved = false;
 
     // Update is called once per frame
     void Update()
@@ -141,8 +143,13 @@ public class TileSelecter : MonoBehaviour
                                 //Instantiate(prefab, spawnObject, Quaternion.identity);
                                 //Info.IsOccupied = true; //避免重複生成
 
-                                //使用 UnitMover 的 MoveTo 功能來移動單位
-                                //修正: 
+                                if (hasMoved)
+                                {
+                                    Debug.LogWarning("這回合已經移動過了，無法再移動！");
+                                    return;
+                                }
+                                hasMoved = true; //標記已經移動過了
+                                Debug.Log("已經移動過了");
                                 StartCoroutine(selectedUnit.MoveTo(Info));
                             }
                         }

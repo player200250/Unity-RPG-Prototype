@@ -26,7 +26,7 @@ public class TurnManager : MonoBehaviour
         TurnText.text = "玩家回合";
     }
 
-    public void EndTurn() 
+    public void EndTurn()
     {
         IsPlayerTurn = !IsPlayerTurn;
         TurnText.text = IsPlayerTurn ? "玩家回合" : "敵人回合";
@@ -34,13 +34,20 @@ public class TurnManager : MonoBehaviour
 
         if (!IsPlayerTurn)
         {
-            // 如果現在是敵人回合，則開始敵人行動
+
+
             EnemyAI enemy = FindObjectOfType<EnemyAI>();
             if (enemy != null)
             {
                 // 開始敵人回合
                 StartCoroutine(enemy.TakeTurn());
             }
+           
+        }
+        else
+        {
+            // 玩家回合開始時重置移動
+            FindObjectOfType<TileSelecter>().hasMoved = false;
         }
     }
 
