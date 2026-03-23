@@ -5,8 +5,7 @@
 <!-- ![gameplay](docs/gameplay.gif) -->
 
 ## 🎮 Demo
-<!-- 錄製後填入 -->
-[▶ YouTube Gameplay 影片](#) ・ [📁 GitHub Repo](https://github.com/player200250/Unity-RPG-Prototype)
+[▶ YouTube Gameplay 影片](https://youtu.be/UcGeHEeLVjc) ・ [📁 GitHub Repo](https://github.com/player200250/Unity-RPG-Prototype)
 
 ---
 
