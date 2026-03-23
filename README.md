@@ -4,6 +4,9 @@
 <!-- 建議在這裡放一張遊戲截圖或 GIF -->
 <!-- ![gameplay](docs/gameplay.gif) -->
 
+<img width="1596" height="893" alt="image" src="https://github.com/user-attachments/assets/6d210cf3-fe07-41f8-8fd6-ac2cfa86c3de" />
+
+
 ## 🎮 Demo
 [▶ YouTube Gameplay 影片](https://youtu.be/UcGeHEeLVjc) ・ [📁 GitHub Repo](https://github.com/player200250/Unity-RPG-Prototype)
 
