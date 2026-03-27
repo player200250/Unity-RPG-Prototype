@@ -19,27 +19,6 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(1f); // 等一秒再行動
 
-
-        #region 舊邏輯(太笨了)
-        // 這裡的邏輯非常簡單：隨機移動一格，然後結束回合(舊方法)
-        //// 隨機移動一格
-        //int randomX = Random.Range(-1, 2);
-        //int randomY = Random.Range(-1, 2);
-
-        //int targetX = unitMover.CurrentTile.Grid_X + randomX;
-        //int targetY = unitMover.CurrentTile.Grid_Y + randomY;
-
-        //Vector2Int key = new Vector2Int(targetX, targetY);
-        //if (MapGenerater.Instance.TileMap.ContainsKey(key))
-        //{
-        //    TileInfo targetTile = MapGenerater.Instance.TileMap[key];
-        //    unitMover.MoveTo(targetTile);
-        //    Debug.Log($"敵人移動到:({targetX}, {targetY})");
-        //}
-
-        //// 行動完畢，切換回玩家回合
-        //TurnManager.Instance.EndTurn();
-        #endregion
         #region
         // 新方法：尋找最近的玩家並移動
         // 這裡的邏輯是：找到所有玩家，計算距離，選擇最近的玩家，然後朝那個玩家移動一格 
@@ -76,14 +55,21 @@ public class EnemyAI : MonoBehaviour
         if (MapGenerater.Instance.TileMap.ContainsKey(key))
         {
             TileInfo targetTile = MapGenerater.Instance.TileMap[key];
+            //讀取先前的邏輯，移動到目標格子
+            bool Moved = !targetTile.IsOccupied;
             yield return StartCoroutine(unitMover.MoveTo(targetTile));
-            Debug.Log($"敵人移動到:({targetX}, {targetY})");
+            if(Moved)Debug.Log($"敵人移動到:({targetX}, {targetY})");
         }
+
+        // 移動後重新計算距離
+        int newDx = player.CurrentTile.Grid_X - unitMover.CurrentTile.Grid_X;
+        int newDy = player.CurrentTile.Grid_Y - unitMover.CurrentTile.Grid_Y;
+
         // 計算距離並攻擊玩家(因為單找(dx)和(dy)不太準)
-        int distance = Mathf.Abs(dx) + Mathf.Abs(dy);
+        int distance = Mathf.Abs(newDx) + Mathf.Abs(newDy);
         if (distance <= enemyStats.AttackRange)
         {
-            playerStats.TakeDamage(enemyStats.AttackPower);
+            playerStats.TakeDamage(enemyStats.AttackPower, enemyStats);
             Debug.Log($"敵人攻擊玩家，造成 {enemyStats.AttackPower} 點傷害");
 
             // 檢查玩家是否死亡

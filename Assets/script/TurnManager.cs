@@ -26,12 +26,16 @@ public class TurnManager : MonoBehaviour
     {
         TurnText.text = "玩家回合";
     }
-
+    // 方法:結束回合，切換玩家和敵人回合
     public void EndTurn()
     {
         IsPlayerTurn = !IsPlayerTurn;
         TurnText.text = IsPlayerTurn ? "玩家回合" : "敵人回合";
+        
         Debug.Log("回合結束，現在是 " + (IsPlayerTurn ? "玩家回合" : "敵人回合"));
+
+        // 每次回合切換都倒數CD
+        UpdateAllUnitsCoolDown();
 
         if (!IsPlayerTurn)
         {
@@ -43,7 +47,7 @@ public class TurnManager : MonoBehaviour
             FindObjectOfType<TileSelecter>().hasMoved = false;
         }
     }
-
+    // 方法: 確認玩家死亡或敵人死亡，決定遊戲結束
     public void CheckGameOver()
     {
         // 檢查玩家是否死亡
@@ -53,9 +57,9 @@ public class TurnManager : MonoBehaviour
             Debug.Log("遊戲結束!你輸了!");
             return;
         }
-        // 檢查敵人是否死亡
+        // 檢查敵人是否死亡(不是一個)
         EnemyAI[] enemies = FindObjectsOfType<EnemyAI>();
-        if (enemies.Length <= 1)
+        if (enemies.Length <= 0) //因為 應該是 <= 0 或 == 0
         {
             TurnText.text = "恭喜!你贏了!";
             Debug.Log("恭喜!你贏了!");
@@ -63,7 +67,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-
+    // 方法:所有敵人執行回合
     public IEnumerator AllEnemiesTakeTurn()
     {
         EnemyAI[] enemies = FindObjectsOfType<EnemyAI>();
@@ -77,8 +81,21 @@ public class TurnManager : MonoBehaviour
         if (GameObject.FindWithTag("Player") != null)
         {
             EndTurn();
+            
         }
     }
+
+    // 方法; 更新所有單位的技能冷卻
+    public void UpdateAllUnitsCoolDown()
+    {
+        UnitSkillHandler[] handlers = FindObjectsOfType<UnitSkillHandler>();
+        foreach (UnitSkillHandler handler in handlers)
+        {
+            handler.UpdateOnTurnEndCoolDown();
+        }
+    }
+
+    // 方法:重新開始遊戲
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
