@@ -1,34 +1,75 @@
 # Unity RPG Prototype
+> 戰棋 RPG 原型 | Unity 2022 | C#
 
-使用 Unity 2022 開發的戰棋 RPG 原型。
+<!-- 建議在這裡放一張遊戲截圖或 GIF -->
+<!-- ![gameplay](docs/gameplay.gif) -->
 
-## 目前功能
+<img width="1596" height="893" alt="image" src="https://github.com/user-attachments/assets/6d210cf3-fe07-41f8-8fd6-ac2cfa86c3de" />
 
-- 程序式格子地圖生成系統
-- 地板點擊選取機制
-- 單位佔位判定
-- 角色移動系統（含Lerp平滑動畫）
-- 角色選取系統（點擊角色選取/取消選取）
-- 移動範圍顯示（曼哈頓距離菱形範圍）
-- 玩家移動範圍顯示（藍色）
-- 點擊敵人顯示威脅範圍（紅色）
-- 回合制系統（玩家/敵人回合切換）
-- 每回合只能移動一次
-- 敵人AI（每回合自動追蹤玩家）
-- 雙向戰鬥系統（玩家攻擊敵人／敵人攻擊玩家）
-- HP條UI顯示（玩家綠色／敵人紅色）
-- 勝負判定（消滅所有敵人獲勝／玩家死亡失敗）
-- 遊戲重置功能
-- 中文UI顯示（TextMeshPro）
-- 點擊冷卻機制（防止連點bug）
 
-## 開發中
+## 🎮 Demo
+[▶ YouTube Gameplay 影片](https://youtu.be/UcGeHEeLVjc) ・ [📁 GitHub Repo](https://github.com/player200250/Unity-RPG-Prototype)
 
-- 移動動畫優化
-- 多敵人支援
-- 攻擊特效
+---
 
-## 技術
+## 專案說明
 
-- Unity 2022.3
-- C#
+使用 Unity 2022 開發的回合制戰棋 RPG 原型，實作從地圖生成、回合管理、AI 行為到戰鬥系統的完整遊戲流程，作為遊戲工程師職位的作品集展示。
+
+---
+
+## 核心系統架構
+
+### 🗺️ 地圖系統
+- 程序式格子地圖生成（支援任意尺寸）
+- `TileInfo` 元件動態掛載，以 `Dictionary<Vector2Int, TileInfo>` 管理格子資料
+- 地板點擊選取（Raycast 射線偵測）
+- 單位佔位判定（`IsOccupied` 旗標）
+
+### 🧭 移動系統
+- 曼哈頓距離計算移動範圍，菱形範圍視覺化顯示
+- 玩家可移動範圍（藍色）、敵人威脅範圍（紅色）即時預覽
+- `Vector3.Lerp` 平滑移動動畫（Coroutine 實作）
+- 每回合限移動一次
+
+### ⚔️ 戰鬥系統
+- 玩家主動攻擊：點選敵人單位觸發，距離判定後扣血
+- 敵人自動攻擊：回合結束後於攻擊範圍內自動觸發
+- 受擊紅光閃爍特效（`FlashRed` Coroutine）
+- HP 條 UI 即時更新（`fillAmount` 動態計算）
+
+### 🤖 敵人 AI
+- 每回合自動追蹤最近玩家，往玩家方向移動一格
+- 使用 `AllEnemiesTakeTurn()` 集中協程管理所有敵人行動，確保回合順序正確
+
+### 🔄 回合系統
+- `TurnManager` 單例管理回合狀態
+- 玩家回合 → 敵人回合依序執行 → 切回玩家回合
+- 勝負判定：消滅所有敵人獲勝 / 玩家死亡失敗
+- 遊戲重置功能（`SceneManager.LoadScene`）
+
+---
+
+## 技術重點
+
+| 技術 | 應用場景 |
+|------|---------|
+| Singleton Pattern | `TurnManager`、`MapGenerater` 全域管理 |
+| Coroutine 協程鏈 | 移動動畫、敵人AI行動、受擊特效依序執行 |
+| Raycast 射線偵測 | 地板點擊、角色選取（分層偵測 Layer Mask）|
+| Manhattan Distance | 移動範圍與攻擊範圍計算 |
+| Dictionary | 格子座標快速查詢 `O(1)` |
+| TextMeshPro | 中文 UI 顯示 |
+
+---
+
+## 開發中功能
+- [ ] 移動動畫路徑優化
+- [ ] 多敵人 AI 優先目標選擇
+- [ ] 攻擊特效強化
+
+---
+
+## 環境需求
+- Unity 2022.x
+- TextMeshPro（Package Manager 安裝）
