@@ -6,7 +6,7 @@ public class UnitSkillHandler : MonoBehaviour
 {
     // 單位技能處理器，負責管理單位的技能
     public List<SkillBase> skills = new List<SkillBase>();
-    
+
     // 主動技能觸發
     public void UseActiveSkill(int index, UnitStats target)
     {
@@ -15,9 +15,8 @@ public class UnitSkillHandler : MonoBehaviour
             Debug.LogWarning("技能索引超出範圍！");
             return;
         }
-        SkillBase skill = skills[index];
         UnitStats self = GetComponent<UnitStats>();
-        skill.UseSkill(skill.owner, target);
+        skills[index].UseSkill(self, target);
     }
     // 被動技能觸發
     public void TriggerPassive(UnitStats attacker)

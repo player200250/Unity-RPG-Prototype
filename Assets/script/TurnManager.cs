@@ -37,14 +37,18 @@ public class TurnManager : MonoBehaviour
         // 每次回合切換都倒數CD
         UpdateAllUnitsCoolDown();
 
+
+
         if (!IsPlayerTurn)
         {
+            // 敵人回合開始，隱藏技能面板
+            FindObjectOfType<SkillUIPanel>().HideSkills();
             StartCoroutine(AllEnemiesTakeTurn());
         }
         else
         {
-            // 玩家回合開始時重置移動
             FindObjectOfType<TileSelecter>().hasMoved = false;
+            FindAnyObjectByType<TileSelecter>().hasAttacked = false;
         }
     }
     // 方法: 確認玩家死亡或敵人死亡，決定遊戲結束

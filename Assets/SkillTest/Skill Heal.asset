@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2205a91a8d6427947a1e500024e1fe67, type: 3}
   m_Name: Skill Heal
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  skillName: 
-  skillDescription: 
-  skillCooldown: 0
+  skillName: "\u6CBB\u7642"
+  skillDescription: "\u6CBB\u7642\u81EA\u5DF1\u8207\u968A\u53CB\uFF0C\u5C0D\u6575\u4EBA\u7121\u6548"
+  skillCooldown: 2
   currentCooldown: 0
+  targetType: 1

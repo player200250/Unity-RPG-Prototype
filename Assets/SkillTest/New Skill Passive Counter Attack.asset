@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Skill Passive Counter Attack
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  skillName: 
-  skillDescription: 
-  skillCooldown: 0
+  skillName: "\u53CD\u64CA"
+  skillDescription: "\u53D7\u5230\u653B\u64CA\u6642\u653B\u64CA\u6575\u4EBA"
+  skillCooldown: 3
   currentCooldown: 0
