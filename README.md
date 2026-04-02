@@ -8,7 +8,7 @@
 
 
 ## 🎮 Demo
-[▶ YouTube Gameplay 影片](https://youtu.be/XCu5_yI1qCM) ・ [📁 GitHub Repo](https://github.com/player200250/Unity-RPG-Prototype)
+[▶ YouTube Gameplay 影片](https://youtu.be/XCu5_yI1qCM) ・ [🎮 試玩 Demo](https://player200250.itch.io/last-walk-prototype) ・ [📁 GitHub Repo](https://github.com/player200250/Unity-RPG-Prototype)
 
 ---
 
