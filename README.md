@@ -73,7 +73,7 @@
 ---
 
 ## 開發中功能
-- [ ] WebGL 打包上傳 itch.io
+- [x] WebGL 打包上傳 itch.io ← 已完成
 - [ ] currentCooldown 共用問題修正
 - [ ] 移動動畫路徑優化
 - [ ] 多敵人 AI 優先目標選擇
