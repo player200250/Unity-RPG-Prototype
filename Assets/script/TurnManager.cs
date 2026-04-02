@@ -8,8 +8,13 @@ public class TurnManager : MonoBehaviour
 {
     public static TurnManager Instance { get; private set; }
 
+
     public bool IsPlayerTurn = true;
     public TextMeshProUGUI TurnText;
+
+    public GameObject gameOverPanel;
+    public TextMeshProUGUI resultText;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -58,14 +63,20 @@ public class TurnManager : MonoBehaviour
         if (GameObject.FindWithTag("Player") == null)
         {
             TurnText.text = "遊戲結束!你輸了!";
+            resultText.text = "遊戲結束!你輸了!";
+            gameOverPanel.SetActive(true);
+            IsPlayerTurn = false;
             Debug.Log("遊戲結束!你輸了!");
             return;
         }
         // 檢查敵人是否死亡(不是一個)
         EnemyAI[] enemies = FindObjectsOfType<EnemyAI>();
-        if (enemies.Length <= 0) //因為 應該是 <= 0 或 == 0
+        if (enemies.Length < 1) //因為 應該是 <= 0 或 == 0
         {
             TurnText.text = "恭喜!你贏了!";
+            resultText.text = "遊戲結束!你贏了!";
+            gameOverPanel.SetActive(true);
+            IsPlayerTurn = false;
             Debug.Log("恭喜!你贏了!");
             return;
         }
